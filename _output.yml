@@ -1,0 +1,11 @@
+bookdown::gitbook:
+  css:
+    - lib/css/bootstrap.min.css
+    - lib/css/style.css
+    - lib/css/lesson.css
+  includes:
+  config:
+    toc:
+      collapse: section
+      before: |
+        <li><a href="./">STAT 454 Capstone</a></li>
