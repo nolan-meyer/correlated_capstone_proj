@@ -8,4 +8,4 @@ bookdown::gitbook:
     toc:
       collapse: section
       before: |
-        <li><a href="./">correlated Data Capstone</a></li>
+        <li><a href="./">Correlated Data Capstone</a></li>
