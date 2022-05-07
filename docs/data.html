@@ -143,9 +143,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#data-source"><i class="fa fa-check"></i><b>2.1</b> Data Source<span></span></a></li>
-<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#variables"><i class="fa fa-check"></i><b>2.2</b> Variables<span></span></a></li>
-<li class="chapter" data-level="2.3" data-path="data.html"><a href="data.html#data-cleaning"><i class="fa fa-check"></i><b>2.3</b> Data Cleaning<span></span></a></li>
+<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#source"><i class="fa fa-check"></i><b>2.1</b> Source<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#variables-information-collected"><i class="fa fa-check"></i><b>2.2</b> Variables &amp; Information Collected<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>3</b> Cross-references<span></span></a>
 <ul>
@@ -190,17 +189,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="data" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="data-source" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Data Source<a href="data.html#data-source" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Our data includes financial information on companies in the S&amp;P 500 stock index from 1999-2021. This information was scraped from Yahoo Finance in November of 2021, and collected in a csv format for data analysis.</p>
-<p>To collect the data, first, we got the list of the current 500 S&amp;P companies from Slickchart (<a href="https://www.slickcharts.com/sp500" class="uri">https://www.slickcharts.com/sp500</a>). After having the list of the companies, we then moved on to the financial information of the listed companies on yahoo finance (<a href="https://finance.yahoo.com/" class="uri">https://finance.yahoo.com/</a>) to get the metrics such as sales, earnings, cogs, stock price, and market sector. We then scraped the data using the BeautifulSoup library in Python and turned that into a CSV file.</p>
-<p>Our main goal is to analyze and model this data to better improve projections for a company’s future metrics, like earnings.</p>
+<div id="source" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Source<a href="data.html#source" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Unfortunately, many large soccer data sets are privately owned by the companies that collect them. Acquiring the data for research purposes is difficult and expensive, but for the Soccer Data Challenge <span class="citation">[@sobig_soccer_challenge]</span> initiative organized by SoBigData (SoBigData), Wyscout.com made an extensive collection of soccer match logs that cover seven prominent male soccer competitions publicly available.</p>
+<p>The data is collected and provided by Wyscout, a leading company in the soccer industry which connects soccer professionals worldwide and lends analytical support to more than 50 soccer associations and over 1,000 professional clubs. The procedure of data collection is performed by video analysts who are trained and focused on data collection for soccer through proprietary software. The data is made publicly available in order to allow for scientific research outside of the private sector.</p>
 </div>
-<div id="variables" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Variables<a href="data.html#variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-</div>
-<div id="data-cleaning" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Data Cleaning<a href="data.html#data-cleaning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="variables-information-collected" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Variables &amp; Information Collected<a href="data.html#variables-information-collected" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The data set contains all the spatio-temporal events (passes, shots, fouls, etc.) as well as information about the outcome of the event, players and characteristics that occur during each match over seven major soccer competitions. Of the seven competitions, five are European leagues composed of the English Premier League, French Ligue 1, German Bundesliga, Spanish La Liga, and Italian Serie A. These competitions are the most important club competitions in Europe according to the UEFA country coefficient, which is used to rank the football associations of Europe. These rankings are used to determine the number of clubs from an association that will participate in the UEFA Champions League and the UEFA Europa League. In addition to the club data which was gathered during the 2017/18 season, international match data from the 2016 UEFA European Football Championship and 2018 FIFA World Cup is also included <span class="citation">[@pappalardo_massucco_2019]</span>.</p>
 
 </div>
 </div>

@@ -6,9 +6,8 @@ welcome
 introduction
 research-questions-goals
 data
-data-source
-variables
-data-cleaning
+source
+variables-information-collected
 cross
 chapters-and-sub-chapters
 captioned-figures-and-tables
