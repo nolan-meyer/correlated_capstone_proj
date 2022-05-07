@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>A Spatial Analysis of Passing Tendencies in European Soccer</title>
+  <title>Chapter 2 Data | A Spatial Analysis of Passing Tendencies in European Soccer</title>
   <meta name="description" content="Correlated Data Capstone" />
   <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="A Spatial Analysis of Passing Tendencies in European Soccer" />
+  <meta property="og:title" content="Chapter 2 Data | A Spatial Analysis of Passing Tendencies in European Soccer" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Correlated Data Capstone" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Spatial Analysis of Passing Tendencies in European Soccer" />
+  <meta name="twitter:title" content="Chapter 2 Data | A Spatial Analysis of Passing Tendencies in European Soccer" />
   
   <meta name="twitter:description" content="Correlated Data Capstone" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="data.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="cross.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -188,29 +188,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">A Spatial Analysis of Passing Tendencies in European Soccer</h1>
-<p class="author"><em>Nolan Meyer, Declan Elias, Duc Ngo</em></p>
-<p class="date"><em>Macalester College, Spring 2022, Correlated Data Capstone Project</em></p>
+<div id="data" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="data-source" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Data Source<a href="data.html#data-source" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our data includes financial information on companies in the S&amp;P 500 stock index from 1999-2021. This information was scraped from Yahoo Finance in November of 2021, and collected in a csv format for data analysis.</p>
+<p>To collect the data, first, we got the list of the current 500 S&amp;P companies from Slickchart (<a href="https://www.slickcharts.com/sp500" class="uri">https://www.slickcharts.com/sp500</a>). After having the list of the companies, we then moved on to the financial information of the listed companies on yahoo finance (<a href="https://finance.yahoo.com/" class="uri">https://finance.yahoo.com/</a>) to get the metrics such as sales, earnings, cogs, stock price, and market sector. We then scraped the data using the BeautifulSoup library in Python and turned that into a CSV file.</p>
+<p>Our main goal is to analyze and model this data to better improve projections for a company’s future metrics, like earnings.</p>
 </div>
-<div id="welcome" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Welcome<a href="index.html#welcome" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="introduction" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Soccer is truly the world’s game. With an estimated 4 billion fans worldwide, professional soccer is more popular than baseball, American football, basketball, and hockey combined. In the U.S, many sports fans consider the Super Bowl as the biggest and most important game of the year. After all, it does attract the most attention of any American sporting event, with an average viewership of just under 100 million. However, the NFL championship game pales in comparison to Europe’s biggest yearly soccer event, the Champions League Final, which quadruples the amount of fans tuning in at 400 million. Additionally, according to FIFA, the 2018 World Cup final between France and Croatia reached a total viewer count of 1.1 billion. Across the 64 games of the competition 4.5 billion viewers tuned in <span class="citation">[@burton_2022]</span>. Proving that while soccer might not be the most popular sport in the U.S, the sport dominates the global market.</p>
-<p>However, statistical analysis of professional soccer has been way behind that of the “Big 4” American sports (baseball, football, basketball, and soccer). Michael Lewis brought data analysis in professional sports into the mainstream when he published Moneyball: The Art of Winning an Unfair Game in 2003. The book detailed the Oakland Athletics’ and its general manager Billy Beane’s analytical and evidence-based approach to assembling a competitive baseball team despite Oakland’s small budget. Since then, data analytics has taken the sports world by storm. Teams and fans alike have become more accustomed to advanced analytics, and have massive amounts of data available at a moment’s notice. All major American sports teams have integrated statistical analysis into their daily operations.</p>
-<p>However, professional soccer teams and coaches have been slower to accept analytics. This is due to the fact that until recently soccer has been one of the most difficult sports to analyze from a statistical perspective. Fundamentally, the biggest difficulty with analyzing soccer is the nature of the game. The low scoring and fluid style of the sport lends itself to a lack of data describing the performance of players and teams <span class="citation">[@pappalardo_2021]</span>.</p>
-<p>Soccer analytics has been an area of interest for a long time, but without the technology to track where and when events are happening few breakthroughs have happened. That is until recently, individual clubs have begun to hire specialized companies to collect massive amounts of data about players’ every move. Video-tracking and GPS technology has introduced an enormous amount of data to the soccer world. The volume and complexity of the data provides an unprecedented opportunity for clubs to measure their performance throughout individual games.</p>
+<div id="variables" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Variables<a href="data.html#variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="research-questions-goals" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Research Questions &amp; Goals<a href="index.html#research-questions-goals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>As mentioned previously, one of things that makes soccer more difficult to analyze and make predictions about outcomes is the fact that goals only account for a tiny fraction of the events that happen in match (if they occur at all). Within this data set, that average match contains 1675 events (SD: 110), and only a couple will be goals given the low-scoring nature of the game. However, the most common event in a match are passes, accounting for 50% of all events.</p>
-<p>Passes are a fundamental way to move the ball around the field and create scoring chances and opportunities. The way a team passes is often influenced by many factors like their tactics, time of the game, player’s, and more. Our interest lies in understanding the differences between how and where teams pass. Our main research questions are:</p>
-<ol style="list-style-type: decimal">
-<li><p><em>How are passes distributed differently based on factors within a soccer match?</em></p></li>
-<li><p><em>Where on the field do teams find more success passing than other teams, specifically in the Premier League?</em></p></li>
-<li><p><em>How does question #2 vary between the top 5 European leagues?</em></p></li>
-</ol>
+<div id="data-cleaning" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Data Cleaning<a href="data.html#data-cleaning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
@@ -219,8 +209,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="data.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cross.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,7 +4,7 @@ language:
     chapter_name: "Chapter "
 rmd_files: [
   "index.Rmd",
-  "01-intro.Rmd",
+  "data.Rmd",
   "02-cross-refs.Rmd",
   "03-parts.Rmd",
   "04-citations.Rmd",
