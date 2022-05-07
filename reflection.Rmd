@@ -1,0 +1,17 @@
+---
+output:
+  html_document:
+    code_folding: hide
+---
+
+# Reflection {#reflection}
+
+## Conlusions
+
+Overall, for our project, we have successfully measured the differences in passing tendencies and distributions between five major leagues in Europe and clubs in Premier League. We have found and quantified the ways that each team passes and how they control the space and areas to bring them success. For the next steps of our research, we would love to expand our analysis into players' differences to see how they are changing within a season, how they play for each match to track their progress within one season. It would be really interesting to see how each player reacts to different teams or how they perform during a whole match. With that, we can understand more about the progression and efforts for each player within each team. 
+
+Additionally, one competition that we did not have a chance to analyze is the UEFA Champions League. UEFA Champions League is knockout style tournament where best teams across Europe qualify from the leagues we analyzed and others, to play against each other to crown a European champion. It would be really interesting to see whether Manchester City can still dominate the league as the club has done in Premier League or if other teams will achieve higher success at the end. That will be the topic in which we will be interested in researching for our next steps. 
+
+## Acknowledgements
+
+We would like to thank Professor Brianna Heggeseth, our Correlated Data teacher, who taught us the skills necessary to perform this analysis and also provided us with constructive feedback and oversight along the way. In addition, the resources found at [https://bcheggeseth.github.io/CorrelatedData/](https://bcheggeseth.github.io/CorrelatedData/) were used during this project.

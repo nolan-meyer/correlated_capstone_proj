@@ -5,11 +5,8 @@ language:
 rmd_files: [
   "index.Rmd",
   "data.Rmd",
-  "02-cross-refs.Rmd",
-  "03-parts.Rmd",
-  "04-citations.Rmd",
-  "05-blocks.Rmd",
-  "06-share.Rmd",
-  "07-references.Rmd"]
+  "vis-and-analysis.Rmd",
+  "models.Rmd",
+  "reflection.Rmd"]
 delete_merged_file: true 
 output_dir: "docs"

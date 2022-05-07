@@ -1,0 +1,279 @@
+---
+output:
+  html_document:
+    code_folding: hide
+---
+
+
+
+# Models
+
+After seeing the effects that different factors like team, time period, and position had on the distribution of pass locations, we decided to build models based on these covariates along with other spatial information to try and answer our second two research questions: where on the field do teams find more success passing than other teams, specifically in the Premier League, and how does this vary between the top 5 European leagues?
+
+
+## Methods
+
+The model structure we decided to use was a generalized linear mixed-effects model. We settled on this type of model for a number of reasons. When we think about how the data is structured, we must acknowledge the fact that we have repeated measures on subjects (teams and leagues) which creates natural groupings among the points. Because of this, each team's or league's passing locations will likely be similar from game to game throughout the season, given their tactics, players, etc., meaning their passing distributions are correlated within the group. In a generalized linear mixed-effects model, we can incorporate this correlation and allow for each group to have different slopes and intercepts -- random effects -- for positional predictor variables to account for the fact that one team may pass on the right side of the field more, while another passes the ball around the defense a lot.
+
+With that said, we can also incorporate fixed effects -- global slopes -- for all of the teams/leagues for variables that aren't as team specific into a generalized linear mixed-effects model. For example, we saw earlier how the pass distributions varied based on a player's assigned position, or the time of the game. These will probably be very consistent across teams and leagues, in that most defenders will pass in similar areas, and similar passing tendencies will occur near the start and end of the game, regardless of team/league. Using this information, we can use the overall trends and incorporate them into this type of model as well.
+
+Our outcome variable of interest is the amount of successful passes, as we sought to understand where and how teams find more success in passing, not just where passes are taking place. The predictor variables we considered inclusding as fixed effects were the time frame, assigned player position, and then two spatial indicator variables: "SideLabel" and "LongLabel". These each served as indicators for three spatial zones, namely left, center, right, and defensive third, midfield third, attacking third respectively, based on the 18 grid zone we created previously. The "SideLabel" and "LongLabel" variables were also included as random effects, based on the team or league, as again we expect that with each team or league, passing locations will be similar from game to game given their tactics, players, and play style.
+
+For this type of model, we must also specify a probability distribution for our outcome. Since we have count data, in the form of counts of the number of passes, we chose a Poisson distribution as it best fits this type of data compared to other distributions.
+
+
+### Variable Selection
+
+In order to build the final models, we had to determine which of the potential predictor variables we had identified to include as fixed effects (overall intercepts/slopes) and random effects (team or league specific intercepts/slopes). 
+
+Beginning with the fixed effects, we started with just time frame as a predictor and looked at the BIC (Bayesian Information Criterion) score while keeping the random effects (spatial indicator variables) the same. BIC is a measure of how well the model is fit, that takes into account model complexity and penalizes models that are overly complex, with lower BIC scores being better. We then added in position, and the BIC decreased, indicating it should be in the model. From there we did the same with "LongLabel", and again saw a decrease in BIC. Lastly, we tested the "SideLabel" variable. This variable actually increased the BIC slightly, but when looking at the z-scores they indicate the slopes are meaningful and significantly different from 0. Because of this, and the fact that the BIC increased negligibly, we decided to keep the side of the field variable as a fixed effect predictor variable. These result were consistent for both the Premier League Teams model, and the Top 5 European Leagues model.
+
+For determining which random effects should be included, we held the four fixed effects variables the same and repeated a similar process as above, this time using a likelihood ratio / ANOVA test to compare the models on their fit. In this case the null hypothesis is that the simpler model is complex. If we see a very small p-value from the test, we have evidence to reject the null hypothesis and are in favor of the more complex model. Beginning with only a random slope, we compared this to a model with with a random slope and intercept for the side label. The p-value was very small, indicating that the side of the field variable should be included as a random effect. We repeated this process, comparing this new model to one with both the side and height up the field ("LongLabel") variable and did another anova test. Again, the p-value was incredibly small, favoring the more complex model with both spatial zone variables as random effects. These result were consistent for both the Premier League Teams model, and the Top 5 European Leagues model.
+
+
+## Final Model Stucture
+
+In summary, our generalized linear mixed-effects models will model & predict the amount of accurate passes within zones, time frames, position, and either team or league using a poisson distribution and the previously explored variables of interest: time, position, and indicator variables for spatial zones that we created. These models allow for each team or league to have their own intercept and slopes (random effects) based on how they use the field spatially, based on the idea that each team/league will have their own styles of play that affect how and where they pass, and have global intercepts and slopes (fixed effects) for the variables that are not as team/league specific.
+
+## Top 5 European Leagues Model
+
+The European Leagues model groups by each of the top 5 European leagues (English Premier League, French Ligue 1, German Bundesliga, Spanish La Liga, and Italian Serie A) and allows for each of these teams to have their own intercepts and slopes for the spatial indicator variables. This model will help us learn about how where on the field teams find more success passing varies between the top 5 European leagues.
+
+```{r, results = "hide"}
+mod_glmer <- position_team_areal_data_all_leagues %>%
+  group_by(zone, timeFrame, league, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + (SideLabel + LongLabel|league), data = ., family = poisson())
+
+BIC(mod_glmer)
+```
+
+```{r, results = "hide"}
+mod_glmer <- position_team_areal_data_all_leagues %>%
+  group_by(zone, timeFrame, league, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position + (SideLabel + LongLabel|league), data = ., family = poisson())
+
+BIC(mod_glmer)
+```
+
+```{r, results = "hide"}
+mod_glmer <- position_team_areal_data_all_leagues %>%
+  group_by(zone, timeFrame, league, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position + LongLabel + (SideLabel + LongLabel|league), data = ., family = poisson())
+
+BIC(mod_glmer)
+```
+
+```{r, results = "hide"}
+mod_glmer <- position_team_areal_data_all_leagues %>%
+  group_by(zone, timeFrame, league, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + SideLabel + LongLabel + (SideLabel + LongLabel|league), data = ., family = poisson())
+
+BIC(mod_glmer)
+mod_glmer %>% summary()
+```
+
+
+```{r, results = "hide"}
+mod_glmer1 <- position_team_areal_data_all_leagues %>%
+  group_by(zone, timeFrame, league, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + SideLabel + LongLabel + (1|league), data = ., family = poisson())
+
+mod_glmer2 <- position_team_areal_data_all_leagues %>%
+  group_by(zone, timeFrame, league, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + SideLabel + LongLabel + (SideLabel|league), data = ., family = poisson())
+
+anova(mod_glmer1, mod_glmer2)
+```
+
+```{r, results = "hide"}
+mod_glmer3 <- position_team_areal_data_all_leagues %>%
+  group_by(zone, timeFrame, league, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + SideLabel + LongLabel + (SideLabel + LongLabel|league), data = ., family = poisson())
+
+anova(mod_glmer2, mod_glmer3)
+```
+
+
+
+```{r, echo=TRUE}
+# Final Model
+mod_glmer_league_final <- position_team_areal_data_all_leagues %>%
+  group_by(zone, timeFrame, league, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + SideLabel + LongLabel + (SideLabel + LongLabel|league), data = ., family = poisson())
+```
+
+```{r, echo=TRUE}
+mod_glmer_league_final %>% summary()
+
+mod_glmer_league_final %>% ranef()
+```
+
+
+### Results
+
+To first explore how teams use the field, we look at an overview of each league to see if any differences jump out. We combined all the individual club league data sets to be able to compare passing tendencies between the top leagues. 
+
+Mixed-effects models give both an overall and subject-specific interpretation. This means we can look at how all 5 leagues together pass the ball as well as compare individual leagues to the average expected passing tendencies. Looking at the fixed effects show how teams across all leagues pass the ball. 
+
+Location on the field is an important factor in the amount of successful passes occurring. The model expects a little over twice the amount of completed passes in the middle third than compared to either the attacking or defensive third. Similarly, more successful passes occur on the flanks. In the context of our data, the flank is defined as the outside zones running along the touchline. Keeping all other variables constant, the model expects a multiplicative change of about 1.5 in the amount of accurate passes that occur when the pass happens on one of the flanks as opposed to the middle of the field. 
+
+The model shows most of the action takes place in the middle of the field, and when the ball is moved around it usually happens on the flanks. This makes sense given the way soccer is played. Both the defensive and attacking third push the ball into the midfield. When a team possesses the ball in their defensive third, the goal is to move the ball up the field and away from their own goal. When possession occurs in the attacking third, the opposing team is not going to allow the attack to move the ball around easily, playing more intense and tighter defense. This leads to the ball being pushed away from the goal in an attempt to retain possession by either moving into space along the flanks or recycling back down the pitch. In the midfield, the player on the ball has more options and space to work with along with less pressure from the opposing team.
+
+In a similar sense, the nature of the sport pushes the ball to the outside of the field. When possessing the ball in the defense zone, the team needs to move the ball away from their goal. The easiest way is usually by passing the ball to the flanks and then moving the ball up. With possession in the midfield and the attacking third, teams want to move the ball up the field but are met with strong opposition around the goal. In defense, teams will play more compact and closer to the middle to protect the goal leaving room for the attacking team to use space on the flanks.
+
+In addition to space, the model indicates that the position making the pass has a large influence on the amount of accurate passes. Midfielders and defenders are expected to make the most passes, with both positions predicted to make about three times the amount of passes as forwards and five times as many passes as goalkeepers. This estimation is reasonable because when a team has possession, midfielders and defenders have the role of supporting the attack and moving the ball up the field to the forwards. The main goal of the forward position is to score, only passing if a goal-scoring opportunity is not available. 
+
+The time frame does not have a large effect on the overall amount of passes. The ball may be moved around differently as the game progresses, however the ball is still being moved around. 
+
+The intercept for this model refers to the expected number of passes made by a defender in the attacking zone in the first fifteen minutes of the game. By itself, this number does not really give much information because each of our predictors is a categorical variable. But the number does act as the starting point, and each estimate shows us a multiplicative change of the intercept.
+
+The values talked about apply to the averages of all 5 leagues, however if we want to get a better understanding of how each individual league uses space we look at the random effects. The random effects give us a multiplicative change for the individual league coefficient from the average coefficient from the five league model. For example, the estimate for the multiplicative change in the amount of successful passes between the attacking zone and the defensive zone holding all else constant for England is 0.8944 times as much, meaning more accurate passes occur higher up the field in the attacking third in England.
+
+The random intercept value shows us which leagues start with a higher or lower successful pass total. Although it does not exactly tell us the differences in successful pass totals, it gives us a good reference. England and Germany begin with noticeably fewer passes. France’s multiplicative change in the intercept is right around 1, and Italy and Spain have a noticeably large increase. This is a good indication that England and Germany are expected to have the least amount of total passes and Italy and Spain should have the most.
+
+The random slope values show us how each league uses space differently. Different leagues are known for different styles of play. For example, Spain is known for its technical and possession-oriented style of play whereas England is known for its physical and direct style as well as a high pace of play. 
+
+It would follow that England has the lowest multiplicative change of the slope for both the left and right flanks as well as the largest increase in the middle third slope coefficient as well as the biggest decrease in the value of the defensive third estimate. England uses the middle of the field more than any other league. No other league stands out quite as much as England, but France leads in the usage of the flanks and is a very close second to Germany in terms of passing in the defensive third. 
+
+This model motivates the use of a similar model on the teams of the English Premier League in order to explore deeper how English teams use the field. 
+
+
+
+## Premier League Teams Model
+
+For this model, we try to group by 20 teams in the Premier League and allows for each of these teams to have their own intercepts and slopes for the spatial indicator variables. This model can help us uncover the differences between each team as well as about their tendencies on the field. 
+
+```{r, results = "hide"}
+position_team_areal_data = englandPlayers %>%
+  drop_na() %>%
+  rename(team = node_name,
+         position = node_role_code2) %>% 
+  group_by(position, zone, team, timeFrame) %>%
+  summarise_data() %>% ungroup()
+```
+
+```{r, results = "hide"}
+mod_glmer <- position_team_areal_data %>%
+  group_by(zone, timeFrame, team, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + (SideLabel + LongLabel|team), data = ., family = poisson())
+
+BIC(mod_glmer)
+```
+
+```{r, results = "hide"}
+mod_glmer <- position_team_areal_data %>%
+  group_by(zone, timeFrame, team, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position + (SideLabel + LongLabel|team), data = ., family = poisson())
+
+BIC(mod_glmer)
+```
+
+```{r, results = "hide"}
+mod_glmer <- position_team_areal_data %>%
+  group_by(zone, timeFrame, team, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position + LongLabel + (SideLabel + LongLabel|team), data = ., family = poisson())
+
+BIC(mod_glmer)
+```
+
+```{r, results = "hide"}
+mod_glmer <- position_team_areal_data %>%
+  group_by(zone, timeFrame, team, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + LongLabel + SideLabel + (SideLabel + LongLabel|team), data = ., family = poisson())
+
+BIC(mod_glmer)
+mod_glmer %>% summary()
+```
+
+
+```{r, results = "hide"}
+mod_glmer1 <- position_team_areal_data %>%
+  group_by(zone, timeFrame, team, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + LongLabel + SideLabel + (1|team), data = ., family = poisson())
+
+mod_glmer2 <- position_team_areal_data %>%
+  group_by(zone, timeFrame, team, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + LongLabel + SideLabel + (SideLabel|team), data = ., family = poisson())
+
+anova(mod_glmer1, mod_glmer2)
+```
+
+```{r, results = "hide"}
+mod_glmer3 <- position_team_areal_data %>%
+  group_by(zone, timeFrame, team, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + LongLabel + SideLabel + (LongLabel + SideLabel|team), data = ., family = poisson())
+
+anova(mod_glmer2, mod_glmer3)
+```
+
+
+
+```{r, echo=TRUE}
+# Final Model
+mod_glmer_prem_final <- position_team_areal_data %>%
+  group_by(zone, timeFrame, team, position) %>%
+  summarise(total_accurate_passes = sum(accurate)) %>%
+  left_join(pitch.zone.data) %>% as.data.frame() %>%
+  glmer(total_accurate_passes ~ timeFrame + position  + LongLabel + SideLabel + (SideLabel + LongLabel|team), data = ., family = poisson())
+```
+
+```{r, echo=TRUE}
+mod_glmer_prem_final %>% summary()
+
+mod_glmer_prem_final %>% ranef()
+```
+
+
+### Results
+
+There are a few significant differences between the coefficient estimates of the 5 leagues as a whole and the individual English league outside of the differences covered by the random effects. The largest difference is between the estimate of the forward position. Keeping all other variables constant, the European league model expects the multiplicative change in the amount of completed passes between a forward makes compared to defenders to be 0.35, but the English league model expects the change to be 0.25, indicating more passes happening from defensive palyers compared to forwards. Similarly, the multiplicative change is different between midfielder and defender, but with the opposite effect. On average, the midfielder position completes about 1.04 times as many successful passes than defenders in the Premier League. These are quite noticeable differences. Forwards in England pass less, but midfielders pass more. With the greater use of the midfield and more physical and direct style of play discussed above it makes sense that English midfielders take on more of the successful passes than forwards. The main job of a forward in England is to score whereas other leagues may employ forwards who are better at passing the ball around to suit the style of play. 
+
+Looking at the random effects of the model leads to some very interesting results. The teams with the six largest multiplicative changes in the intercept finished top six in the table for the year the data is from, and although the interpretation of the estimate of the intercept does not contain much useful information, it is the value from which the total amount of successful passes given the criteria is based. 
+
+The random slopes show that better teams are expected to make a larger amount of successful passes in the middle of the field and in the attacking third. Five of the bottom six teams in terms of accurate passes on the left flank finished in the top six, and the bottom four in terms of accurate passes on the right flank finished top four in the table. This follows as better teams have more skilled players who are able to operate in more effective ways and use the field better. On the other hand, worse teams are forced to utilize the flanks more often as better opponents are able to control the middle of the pitch and push the team wide. 
+
+Manchester City displays some very interesting tendencies. The change in the amount of successful passes in the defensive third for Manchester City is 0.66 times the league estimate, which is the smallest by a considerable amount. This means that the expected amount of successful passes completed by Manchester City players in the defensive zone is way smaller than any other team, indicating they played a more offensive style and keeping the ball in front of their defenders. They were also very average in using the middle third of the field. Manchester City won the league with 100 points, the Premier League record for points in a season, finishing ahead of second place Manchester United by a whopping 19 points. Overall, looking at the defensive tendencies, we can also see the differences within each team. While strong and major teams such as Manchester City, Manchester United, Liverpool, Arsenal and Tottenham Hotspur spend little time on defense (with the notable exception from Chelsea because of their playing style), smaller and weaker teams spend much more time within the defensive area. It also reflects the differences and the dominance for Manchester City compared to other teams that season as they rarely played within their defensive third.
+
+Looking at the midfield area, the model expects the team to successfully pass in the midfield an average amount of time, which is weird to see when you think about the context of the league. The Premier League was the top league in terms of expected successful passes in the midfield, and we would think the best team would be the best at using the midfield. But Manchester City was so dominant that year that the majority of their successful passes were completed in the attacking third. The multiplicative change in the intercept is substantially larger as well, indicating that the model expected the team to complete considerably more passes than average in the attacking zone. 
+
+Similar patterns were found with other top teams in the league, just not as extreme. Second place finishers Manchester United had a lower estimate in the defensive third as well as an average estimate for the midfield zone but a larger change in the intercept. The model expects the top teams to complete more passes higher up the field and less passes in the defensive third and on the flanks. 
+
+
+
+## Model Limitations
+
+Looking at two models, we can clearly see that our models can help to explain the differences between each team as well as each league. We can see different playing styles in each league, and also understand more about the passing tendencies for each Premier League Team. 
+
+With that being said, because we used a mixed effects model, our standard errors for our predictions will only be valid if we got the covariance matrix correct. We implicitly modeled the covariance structure through the selection of our random effects, and if we made incorrect assumptions for this model then we would not get valid SE's. This should be kept in mind when evaluating the standard errors for our final models.
+
+Additionally, one other major limit of our models is that it only occurs for one year, the 2017/18 season. As lots of players change teams, change the league, it will impact the way a team approaches the game in the future. As we only take into account the difference between each team and each league, this information can change significantly within a short time span. Teams can change their head coach, their main players, which can lead to a significant change in their playing styles and their tendencies in the next time span. 

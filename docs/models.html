@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Models | A Spatial Analysis of Passing Tendencies in European Soccer</title>
+  <meta name="description" content="Correlated Data Capstone" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Models | A Spatial Analysis of Passing Tendencies in European Soccer" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Correlated Data Capstone" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Models | A Spatial Analysis of Passing Tendencies in European Soccer" />
+  
+  <meta name="twitter:description" content="Correlated Data Capstone" />
+  
+
+<meta name="author" content="Nolan Meyer, Declan Elias, Duc Ngo" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="vis-and-analysis.html"/>
+<link rel="next" href="reflection.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Correlated Data Capstone</a></li>
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Welcome<span></span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#research-questions-goals"><i class="fa fa-check"></i><b>1.2</b> Research Questions &amp; Goals<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#source"><i class="fa fa-check"></i><b>2.1</b> Source<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#variables-information-collected"><i class="fa fa-check"></i><b>2.2</b> Variables &amp; Information Collected<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vis-and-analysis.html"><a href="vis-and-analysis.html"><i class="fa fa-check"></i><b>3</b> Visualization and Analysis<span></span></a></li>
+<li class="chapter" data-level="4" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i><b>4</b> Models<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="models.html"><a href="models.html#methods"><i class="fa fa-check"></i><b>4.1</b> Methods<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="models.html"><a href="models.html#variable-selection"><i class="fa fa-check"></i><b>4.1.1</b> Variable Selection<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="models.html"><a href="models.html#final-model-stucture"><i class="fa fa-check"></i><b>4.2</b> Final Model Stucture<span></span></a></li>
+<li class="chapter" data-level="4.3" data-path="models.html"><a href="models.html#top-5-european-leagues-model"><i class="fa fa-check"></i><b>4.3</b> Top 5 European Leagues Model<span></span></a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="models.html"><a href="models.html#results"><i class="fa fa-check"></i><b>4.3.1</b> Results<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="models.html"><a href="models.html#premier-league-teams-model"><i class="fa fa-check"></i><b>4.4</b> Premier League Teams Model<span></span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="models.html"><a href="models.html#results-1"><i class="fa fa-check"></i><b>4.4.1</b> Results<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="models.html"><a href="models.html#model-limitations"><i class="fa fa-check"></i><b>4.5</b> Model Limitations<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="reflection.html"><a href="reflection.html"><i class="fa fa-check"></i><b>5</b> Reflection<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="reflection.html"><a href="reflection.html#conlusions"><i class="fa fa-check"></i><b>5.1</b> Conlusions<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="reflection.html"><a href="reflection.html#acknowledgements"><i class="fa fa-check"></i><b>5.2</b> Acknowledgements<span></span></a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Spatial Analysis of Passing Tendencies in European Soccer</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="models" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Models<a href="models.html#models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>After seeing the effects that different factors like team, time period, and position had on the distribution of pass locations, we decided to build models based on these covariates along with other spatial information to try and answer our second two research questions: where on the field do teams find more success passing than other teams, specifically in the Premier League, and how does this vary between the top 5 European leagues?</p>
+<div id="methods" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Methods<a href="models.html#methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The model structure we decided to use was a generalized linear mixed-effects model. We settled on this type of model for a number of reasons. When we think about how the data is structured, we must acknowledge the fact that we have repeated measures on subjects (teams and leagues) which creates natural groupings among the points. Because of this, each team’s or league’s passing locations will likely be similar from game to game throughout the season, given their tactics, players, etc., meaning their passing distributions are correlated within the group. In a generalized linear mixed-effects model, we can incorporate this correlation and allow for each group to have different slopes and intercepts – random effects – for positional predictor variables to account for the fact that one team may pass on the right side of the field more, while another passes the ball around the defense a lot.</p>
+<p>With that said, we can also incorporate fixed effects – global slopes – for all of the teams/leagues for variables that aren’t as team specific into a generalized linear mixed-effects model. For example, we saw earlier how the pass distributions varied based on a player’s assigned position, or the time of the game. These will probably be very consistent across teams and leagues, in that most defenders will pass in similar areas, and similar passing tendencies will occur near the start and end of the game, regardless of team/league. Using this information, we can use the overall trends and incorporate them into this type of model as well.</p>
+<p>Our outcome variable of interest is the amount of successful passes, as we sought to understand where and how teams find more success in passing, not just where passes are taking place. The predictor variables we considered inclusding as fixed effects were the time frame, assigned player position, and then two spatial indicator variables: “SideLabel” and “LongLabel”. These each served as indicators for three spatial zones, namely left, center, right, and defensive third, midfield third, attacking third respectively, based on the 18 grid zone we created previously. The “SideLabel” and “LongLabel” variables were also included as random effects, based on the team or league, as again we expect that with each team or league, passing locations will be similar from game to game given their tactics, players, and play style.</p>
+<p>For this type of model, we must also specify a probability distribution for our outcome. Since we have count data, in the form of counts of the number of passes, we chose a Poisson distribution as it best fits this type of data compared to other distributions.</p>
+<div id="variable-selection" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Variable Selection<a href="models.html#variable-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In order to build the final models, we had to determine which of the potential predictor variables we had identified to include as fixed effects (overall intercepts/slopes) and random effects (team or league specific intercepts/slopes).</p>
+<p>Beginning with the fixed effects, we started with just time frame as a predictor and looked at the BIC (Bayesian Information Criterion) score while keeping the random effects (spatial indicator variables) the same. BIC is a measure of how well the model is fit, that takes into account model complexity and penalizes models that are overly complex, with lower BIC scores being better. We then added in position, and the BIC decreased, indicating it should be in the model. From there we did the same with “LongLabel”, and again saw a decrease in BIC. Lastly, we tested the “SideLabel” variable. This variable actually increased the BIC slightly, but when looking at the z-scores they indicate the slopes are meaningful and significantly different from 0. Because of this, and the fact that the BIC increased negligibly, we decided to keep the side of the field variable as a fixed effect predictor variable. These result were consistent for both the Premier League Teams model, and the Top 5 European Leagues model.</p>
+<p>For determining which random effects should be included, we held the four fixed effects variables the same and repeated a similar process as above, this time using a likelihood ratio / ANOVA test to compare the models on their fit. In this case the null hypothesis is that the simpler model is complex. If we see a very small p-value from the test, we have evidence to reject the null hypothesis and are in favor of the more complex model. Beginning with only a random slope, we compared this to a model with with a random slope and intercept for the side label. The p-value was very small, indicating that the side of the field variable should be included as a random effect. We repeated this process, comparing this new model to one with both the side and height up the field (“LongLabel”) variable and did another anova test. Again, the p-value was incredibly small, favoring the more complex model with both spatial zone variables as random effects. These result were consistent for both the Premier League Teams model, and the Top 5 European Leagues model.</p>
+</div>
+</div>
+<div id="final-model-stucture" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Final Model Stucture<a href="models.html#final-model-stucture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In summary, our generalized linear mixed-effects models will model &amp; predict the amount of accurate passes within zones, time frames, position, and either team or league using a poisson distribution and the previously explored variables of interest: time, position, and indicator variables for spatial zones that we created. These models allow for each team or league to have their own intercept and slopes (random effects) based on how they use the field spatially, based on the idea that each team/league will have their own styles of play that affect how and where they pass, and have global intercepts and slopes (fixed effects) for the variables that are not as team/league specific.</p>
+</div>
+<div id="top-5-european-leagues-model" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Top 5 European Leagues Model<a href="models.html#top-5-european-leagues-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The European Leagues model groups by each of the top 5 European leagues (English Premier League, French Ligue 1, German Bundesliga, Spanish La Liga, and Italian Serie A) and allows for each of these teams to have their own intercepts and slopes for the spatial indicator variables. This model will help us learn about how where on the field teams find more success passing varies between the top 5 European leagues.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="models.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Final Model</span></span>
+<span id="cb1-2"><a href="models.html#cb1-2" aria-hidden="true" tabindex="-1"></a>mod_glmer_league_final <span class="ot">&lt;-</span> position_team_areal_data_all_leagues <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="models.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(zone, timeFrame, league, position) <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="models.html#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_accurate_passes =</span> <span class="fu">sum</span>(accurate)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-5"><a href="models.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(pitch.zone.data) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="models.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glmer</span>(total_accurate_passes <span class="sc">~</span> timeFrame <span class="sc">+</span> position  <span class="sc">+</span> SideLabel <span class="sc">+</span> LongLabel <span class="sc">+</span> (SideLabel <span class="sc">+</span> LongLabel<span class="sc">|</span>league), <span class="at">data =</span> ., <span class="at">family =</span> <span class="fu">poisson</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="models.html#cb2-1" aria-hidden="true" tabindex="-1"></a>mod_glmer_league_final <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: poisson  ( log )
+## Formula: 
+## total_accurate_passes ~ timeFrame + position + SideLabel + LongLabel +  
+##     (SideLabel + LongLabel | league)
+##    Data: .
+## 
+##       AIC       BIC    logLik  deviance  df.resid 
+##  815712.0  815868.2 -407828.0  815656.0      1931 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -34.215 -15.143  -3.698   8.555 125.290 
+## 
+## Random effects:
+##  Groups Name             Variance Std.Dev. Corr                   
+##  league (Intercept)      0.019604 0.14001                         
+##         SideLabelleft    0.002851 0.05339   0.56                  
+##         SideLabelright   0.001961 0.04429   0.67  0.98            
+##         LongLabeldefense 0.004490 0.06701   0.35  0.39  0.47      
+##         LongLabelmid     0.001577 0.03971  -0.83 -0.48 -0.61 -0.19
+## Number of obs: 1959, groups:  league, 5
+## 
+## Fixed effects:
+##                                 Estimate Std. Error  z value Pr(&gt;|z|)    
+## (Intercept)                     6.863109   0.062651  109.545  &lt; 2e-16 ***
+## timeFrame15 to 30              -0.072076   0.002559  -28.160  &lt; 2e-16 ***
+## timeFrame30 to end of 1st half -0.039939   0.002536  -15.752  &lt; 2e-16 ***
+## timeFrame45 to 60              -0.087747   0.002567  -34.186  &lt; 2e-16 ***
+## timeFrame60 to 75              -0.164035   0.002620  -62.612  &lt; 2e-16 ***
+## timeFrame75 to end of game      0.005554   0.002501    2.220 0.026408 *  
+## positionFW                     -1.043336   0.002264 -460.782  &lt; 2e-16 ***
+## positionGK                     -1.828088   0.003827 -477.662  &lt; 2e-16 ***
+## positionMD                     -0.047587   0.001654  -28.768  &lt; 2e-16 ***
+## SideLabelleft                   0.146610   0.023944    6.123 9.19e-10 ***
+## SideLabelright                  0.149556   0.019889    7.519 5.50e-14 ***
+## LongLabeldefense                0.100412   0.030038    3.343 0.000829 ***
+## LongLabelmid                    0.697527   0.017854   39.068  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## optimizer (Nelder_Mead) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="models.html#cb4-1" aria-hidden="true" tabindex="-1"></a>mod_glmer_league_final <span class="sc">%&gt;%</span> <span class="fu">ranef</span>()</span></code></pre></div>
+<pre><code>## $league
+##         (Intercept) SideLabelleft SideLabelright LongLabeldefense LongLabelmid
+## England -0.21426731   -0.06212851    -0.06308548      -0.11157132   0.05484669
+## France   0.03827223    0.08342390     0.06013303       0.05252448   0.01175749
+## Germany -0.10342598   -0.03495009    -0.02330889       0.07663810   0.01350329
+## Italy    0.15929826   -0.02500292    -0.01211411       0.01467551  -0.01498311
+## Spain    0.12021053    0.03866669     0.03838781      -0.03225197  -0.06514660
+## 
+## with conditional variances for &quot;league&quot;</code></pre>
+<div id="results" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Results<a href="models.html#results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To first explore how teams use the field, we look at an overview of each league to see if any differences jump out. We combined all the individual club league data sets to be able to compare passing tendencies between the top leagues.</p>
+<p>Mixed-effects models give both an overall and subject-specific interpretation. This means we can look at how all 5 leagues together pass the ball as well as compare individual leagues to the average expected passing tendencies. Looking at the fixed effects show how teams across all leagues pass the ball.</p>
+<p>Location on the field is an important factor in the amount of successful passes occurring. The model expects a little over twice the amount of completed passes in the middle third than compared to either the attacking or defensive third. Similarly, more successful passes occur on the flanks. In the context of our data, the flank is defined as the outside zones running along the touchline. Keeping all other variables constant, the model expects a multiplicative change of about 1.5 in the amount of accurate passes that occur when the pass happens on one of the flanks as opposed to the middle of the field.</p>
+<p>The model shows most of the action takes place in the middle of the field, and when the ball is moved around it usually happens on the flanks. This makes sense given the way soccer is played. Both the defensive and attacking third push the ball into the midfield. When a team possesses the ball in their defensive third, the goal is to move the ball up the field and away from their own goal. When possession occurs in the attacking third, the opposing team is not going to allow the attack to move the ball around easily, playing more intense and tighter defense. This leads to the ball being pushed away from the goal in an attempt to retain possession by either moving into space along the flanks or recycling back down the pitch. In the midfield, the player on the ball has more options and space to work with along with less pressure from the opposing team.</p>
+<p>In a similar sense, the nature of the sport pushes the ball to the outside of the field. When possessing the ball in the defense zone, the team needs to move the ball away from their goal. The easiest way is usually by passing the ball to the flanks and then moving the ball up. With possession in the midfield and the attacking third, teams want to move the ball up the field but are met with strong opposition around the goal. In defense, teams will play more compact and closer to the middle to protect the goal leaving room for the attacking team to use space on the flanks.</p>
+<p>In addition to space, the model indicates that the position making the pass has a large influence on the amount of accurate passes. Midfielders and defenders are expected to make the most passes, with both positions predicted to make about three times the amount of passes as forwards and five times as many passes as goalkeepers. This estimation is reasonable because when a team has possession, midfielders and defenders have the role of supporting the attack and moving the ball up the field to the forwards. The main goal of the forward position is to score, only passing if a goal-scoring opportunity is not available.</p>
+<p>The time frame does not have a large effect on the overall amount of passes. The ball may be moved around differently as the game progresses, however the ball is still being moved around.</p>
+<p>The intercept for this model refers to the expected number of passes made by a defender in the attacking zone in the first fifteen minutes of the game. By itself, this number does not really give much information because each of our predictors is a categorical variable. But the number does act as the starting point, and each estimate shows us a multiplicative change of the intercept.</p>
+<p>The values talked about apply to the averages of all 5 leagues, however if we want to get a better understanding of how each individual league uses space we look at the random effects. The random effects give us a multiplicative change for the individual league coefficient from the average coefficient from the five league model. For example, the estimate for the multiplicative change in the amount of successful passes between the attacking zone and the defensive zone holding all else constant for England is 0.8944 times as much, meaning more accurate passes occur higher up the field in the attacking third in England.</p>
+<p>The random intercept value shows us which leagues start with a higher or lower successful pass total. Although it does not exactly tell us the differences in successful pass totals, it gives us a good reference. England and Germany begin with noticeably fewer passes. France’s multiplicative change in the intercept is right around 1, and Italy and Spain have a noticeably large increase. This is a good indication that England and Germany are expected to have the least amount of total passes and Italy and Spain should have the most.</p>
+<p>The random slope values show us how each league uses space differently. Different leagues are known for different styles of play. For example, Spain is known for its technical and possession-oriented style of play whereas England is known for its physical and direct style as well as a high pace of play.</p>
+<p>It would follow that England has the lowest multiplicative change of the slope for both the left and right flanks as well as the largest increase in the middle third slope coefficient as well as the biggest decrease in the value of the defensive third estimate. England uses the middle of the field more than any other league. No other league stands out quite as much as England, but France leads in the usage of the flanks and is a very close second to Germany in terms of passing in the defensive third.</p>
+<p>This model motivates the use of a similar model on the teams of the English Premier League in order to explore deeper how English teams use the field.</p>
+</div>
+</div>
+<div id="premier-league-teams-model" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Premier League Teams Model<a href="models.html#premier-league-teams-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this model, we try to group by 20 teams in the Premier League and allows for each of these teams to have their own intercepts and slopes for the spatial indicator variables. This model can help us uncover the differences between each team as well as about their tendencies on the field.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="models.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Final Model</span></span>
+<span id="cb6-2"><a href="models.html#cb6-2" aria-hidden="true" tabindex="-1"></a>mod_glmer_prem_final <span class="ot">&lt;-</span> position_team_areal_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="models.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(zone, timeFrame, team, position) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="models.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_accurate_passes =</span> <span class="fu">sum</span>(accurate)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="models.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(pitch.zone.data) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="models.html#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glmer</span>(total_accurate_passes <span class="sc">~</span> timeFrame <span class="sc">+</span> position  <span class="sc">+</span> LongLabel <span class="sc">+</span> SideLabel <span class="sc">+</span> (SideLabel <span class="sc">+</span> LongLabel<span class="sc">|</span>team), <span class="at">data =</span> ., <span class="at">family =</span> <span class="fu">poisson</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="models.html#cb7-1" aria-hidden="true" tabindex="-1"></a>mod_glmer_prem_final <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: poisson  ( log )
+## Formula: 
+## total_accurate_passes ~ timeFrame + position + LongLabel + SideLabel +  
+##     (SideLabel + LongLabel | team)
+##    Data: .
+## 
+##      AIC      BIC   logLik deviance df.resid 
+## 186283.9 186476.4 -93113.9 186227.9     7119 
+## 
+## Scaled residuals: 
+##    Min     1Q Median     3Q    Max 
+## -9.250 -3.118 -1.180  2.096 30.202 
+## 
+## Random effects:
+##  Groups Name             Variance Std.Dev. Corr                   
+##  team   (Intercept)      0.138645 0.37235                         
+##         SideLabelleft    0.009334 0.09661  -0.63                  
+##         SideLabelright   0.010848 0.10415  -0.63  0.56            
+##         LongLabeldefense 0.029612 0.17208  -0.84  0.74  0.35      
+##         LongLabelmid     0.009110 0.09544  -0.45  0.18  0.26  0.37
+## Number of obs: 7147, groups:  team, 20
+## 
+## Fixed effects:
+##                                 Estimate Std. Error  z value Pr(&gt;|z|)    
+## (Intercept)                     3.619680   0.083541   43.328  &lt; 2e-16 ***
+## timeFrame15 to 30              -0.070115   0.006505  -10.778  &lt; 2e-16 ***
+## timeFrame30 to end of 1st half -0.025575   0.006426   -3.980 6.89e-05 ***
+## timeFrame45 to 60              -0.111285   0.006581  -16.911  &lt; 2e-16 ***
+## timeFrame60 to 75              -0.200015   0.006735  -29.698  &lt; 2e-16 ***
+## timeFrame75 to end of game     -0.052012   0.006453   -8.060 7.64e-16 ***
+## positionFW                     -1.361478   0.006673 -204.041  &lt; 2e-16 ***
+## positionGK                     -1.439801   0.010774 -133.631  &lt; 2e-16 ***
+## positionMD                      0.040282   0.004114    9.792  &lt; 2e-16 ***
+## LongLabeldefense                0.009061   0.038914    0.233    0.816    
+## LongLabelmid                    0.768458   0.021923   35.053  &lt; 2e-16 ***
+## SideLabelleft                   0.096381   0.022158    4.350 1.36e-05 ***
+## SideLabelright                  0.097374   0.023804    4.091 4.30e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="models.html#cb9-1" aria-hidden="true" tabindex="-1"></a>mod_glmer_prem_final <span class="sc">%&gt;%</span> <span class="fu">ranef</span>()</span></code></pre></div>
+<pre><code>## $team
+##                        (Intercept) SideLabelleft SideLabelright
+## AFC Bournemouth        -0.10478071   0.109808225    0.149007653
+## Arsenal                 0.65486637  -0.141059476   -0.136058182
+## Brighton &amp; Hove Albion -0.39160653   0.204725589    0.140460945
+## Burnley                -0.33057698  -0.007733256    0.070073333
+## Chelsea                 0.46314557  -0.051223624   -0.188126996
+## Crystal Palace         -0.08014673  -0.072267922    0.036634910
+## Everton                -0.17811020  -0.036751168   -0.074109156
+## Huddersfield Town      -0.19325510   0.117027462    0.069312590
+## Leicester City         -0.27084685  -0.002812164    0.084076598
+## Liverpool               0.41473117  -0.110332375   -0.122666045
+## Manchester City         0.79270919  -0.105891210    0.006142583
+## Manchester United       0.35743187  -0.076204251   -0.042214085
+## Newcastle United       -0.30157585   0.034903176   -0.065769711
+## Southampton             0.02569495   0.005349720    0.062832435
+## Stoke City             -0.34344531  -0.111484607   -0.002397658
+## Swansea City           -0.17403275   0.140760686   -0.081018220
+## Tottenham Hotspur       0.49076922  -0.075628148   -0.164475352
+## Watford                -0.08064868   0.095641973    0.042223282
+## West Bromwich Albion   -0.40891308   0.052823735    0.060057650
+## West Ham United        -0.33701387   0.030296737    0.155709522
+##                        LongLabeldefense LongLabelmid
+## AFC Bournemouth             0.113922678  -0.07852773
+## Arsenal                    -0.262694509  -0.15522645
+## Brighton &amp; Hove Albion      0.268496529   0.06357714
+## Burnley                     0.037729298   0.03400205
+## Chelsea                     0.026132716  -0.14885019
+## Crystal Palace             -0.100013324  -0.11808274
+## Everton                     0.094143988   0.04289962
+## Huddersfield Town           0.078045025  -0.08749453
+## Leicester City              0.144242315   0.13611787
+## Liverpool                  -0.136313621   0.14736243
+## Manchester City            -0.404457362  -0.04642365
+## Manchester United          -0.183268701  -0.02731637
+## Newcastle United            0.218406566   0.01505950
+## Southampton                -0.080487444   0.03235321
+## Stoke City                  0.009806435   0.03855111
+## Swansea City                0.197878014   0.10451082
+## Tottenham Hotspur          -0.193570396  -0.04215269
+## Watford                    -0.016846802  -0.08647688
+## West Bromwich Albion        0.177360425   0.01471713
+## West Ham United             0.011292782   0.15973278
+## 
+## with conditional variances for &quot;team&quot;</code></pre>
+<div id="results-1" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Results<a href="models.html#results-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are a few significant differences between the coefficient estimates of the 5 leagues as a whole and the individual English league outside of the differences covered by the random effects. The largest difference is between the estimate of the forward position. Keeping all other variables constant, the European league model expects the multiplicative change in the amount of completed passes between a forward makes compared to defenders to be 0.35, but the English league model expects the change to be 0.25, indicating more passes happening from defensive palyers compared to forwards. Similarly, the multiplicative change is different between midfielder and defender, but with the opposite effect. On average, the midfielder position completes about 1.04 times as many successful passes than defenders in the Premier League. These are quite noticeable differences. Forwards in England pass less, but midfielders pass more. With the greater use of the midfield and more physical and direct style of play discussed above it makes sense that English midfielders take on more of the successful passes than forwards. The main job of a forward in England is to score whereas other leagues may employ forwards who are better at passing the ball around to suit the style of play.</p>
+<p>Looking at the random effects of the model leads to some very interesting results. The teams with the six largest multiplicative changes in the intercept finished top six in the table for the year the data is from, and although the interpretation of the estimate of the intercept does not contain much useful information, it is the value from which the total amount of successful passes given the criteria is based.</p>
+<p>The random slopes show that better teams are expected to make a larger amount of successful passes in the middle of the field and in the attacking third. Five of the bottom six teams in terms of accurate passes on the left flank finished in the top six, and the bottom four in terms of accurate passes on the right flank finished top four in the table. This follows as better teams have more skilled players who are able to operate in more effective ways and use the field better. On the other hand, worse teams are forced to utilize the flanks more often as better opponents are able to control the middle of the pitch and push the team wide.</p>
+<p>Manchester City displays some very interesting tendencies. The change in the amount of successful passes in the defensive third for Manchester City is 0.66 times the league estimate, which is the smallest by a considerable amount. This means that the expected amount of successful passes completed by Manchester City players in the defensive zone is way smaller than any other team, indicating they played a more offensive style and keeping the ball in front of their defenders. They were also very average in using the middle third of the field. Manchester City won the league with 100 points, the Premier League record for points in a season, finishing ahead of second place Manchester United by a whopping 19 points. Overall, looking at the defensive tendencies, we can also see the differences within each team. While strong and major teams such as Manchester City, Manchester United, Liverpool, Arsenal and Tottenham Hotspur spend little time on defense (with the notable exception from Chelsea because of their playing style), smaller and weaker teams spend much more time within the defensive area. It also reflects the differences and the dominance for Manchester City compared to other teams that season as they rarely played within their defensive third.</p>
+<p>Looking at the midfield area, the model expects the team to successfully pass in the midfield an average amount of time, which is weird to see when you think about the context of the league. The Premier League was the top league in terms of expected successful passes in the midfield, and we would think the best team would be the best at using the midfield. But Manchester City was so dominant that year that the majority of their successful passes were completed in the attacking third. The multiplicative change in the intercept is substantially larger as well, indicating that the model expected the team to complete considerably more passes than average in the attacking zone.</p>
+<p>Similar patterns were found with other top teams in the league, just not as extreme. Second place finishers Manchester United had a lower estimate in the defensive third as well as an average estimate for the midfield zone but a larger change in the intercept. The model expects the top teams to complete more passes higher up the field and less passes in the defensive third and on the flanks.</p>
+</div>
+</div>
+<div id="model-limitations" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Model Limitations<a href="models.html#model-limitations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Looking at two models, we can clearly see that our models can help to explain the differences between each team as well as each league. We can see different playing styles in each league, and also understand more about the passing tendencies for each Premier League Team.</p>
+<p>With that being said, because we used a mixed effects model, our standard errors for our predictions will only be valid if we got the covariance matrix correct. We implicitly modeled the covariance structure through the selection of our random effects, and if we made incorrect assumptions for this model then we would not get valid SE’s. This should be kept in mind when evaluating the standard errors for our final models.</p>
+<p>Additionally, one other major limit of our models is that it only occurs for one year, the 2017/18 season. As lots of players change teams, change the league, it will impact the way a team approaches the game in the future. As we only take into account the difference between each team and each league, this information can change significantly within a short time span. Teams can change their head coach, their main players, which can lead to a significant change in their playing styles and their tendencies in the next time span.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="vis-and-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reflection.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

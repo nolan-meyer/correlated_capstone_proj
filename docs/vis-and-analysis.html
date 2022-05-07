@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Visualization and Analysis | A Spatial Analysis of Passing Tendencies in European Soccer</title>
+  <meta name="description" content="Correlated Data Capstone" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Visualization and Analysis | A Spatial Analysis of Passing Tendencies in European Soccer" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Correlated Data Capstone" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Visualization and Analysis | A Spatial Analysis of Passing Tendencies in European Soccer" />
+  
+  <meta name="twitter:description" content="Correlated Data Capstone" />
+  
+
+<meta name="author" content="Nolan Meyer, Declan Elias, Duc Ngo" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data.html"/>
+<link rel="next" href="models.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Correlated Data Capstone</a></li>
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Welcome<span></span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#research-questions-goals"><i class="fa fa-check"></i><b>1.2</b> Research Questions &amp; Goals<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#source"><i class="fa fa-check"></i><b>2.1</b> Source<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#variables-information-collected"><i class="fa fa-check"></i><b>2.2</b> Variables &amp; Information Collected<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vis-and-analysis.html"><a href="vis-and-analysis.html"><i class="fa fa-check"></i><b>3</b> Visualization and Analysis<span></span></a></li>
+<li class="chapter" data-level="4" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i><b>4</b> Models<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="models.html"><a href="models.html#methods"><i class="fa fa-check"></i><b>4.1</b> Methods<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="models.html"><a href="models.html#variable-selection"><i class="fa fa-check"></i><b>4.1.1</b> Variable Selection<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="models.html"><a href="models.html#final-model-stucture"><i class="fa fa-check"></i><b>4.2</b> Final Model Stucture<span></span></a></li>
+<li class="chapter" data-level="4.3" data-path="models.html"><a href="models.html#top-5-european-leagues-model"><i class="fa fa-check"></i><b>4.3</b> Top 5 European Leagues Model<span></span></a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="models.html"><a href="models.html#results"><i class="fa fa-check"></i><b>4.3.1</b> Results<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="models.html"><a href="models.html#premier-league-teams-model"><i class="fa fa-check"></i><b>4.4</b> Premier League Teams Model<span></span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="models.html"><a href="models.html#results-1"><i class="fa fa-check"></i><b>4.4.1</b> Results<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="models.html"><a href="models.html#model-limitations"><i class="fa fa-check"></i><b>4.5</b> Model Limitations<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="reflection.html"><a href="reflection.html"><i class="fa fa-check"></i><b>5</b> Reflection<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="reflection.html"><a href="reflection.html#conlusions"><i class="fa fa-check"></i><b>5.1</b> Conlusions<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="reflection.html"><a href="reflection.html#acknowledgements"><i class="fa fa-check"></i><b>5.2</b> Acknowledgements<span></span></a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Spatial Analysis of Passing Tendencies in European Soccer</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vis-and-analysis" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Visualization and Analysis<a href="vis-and-analysis.html#vis-and-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Our first step was to understand and visualize the overall distribution of passes within individual matches by team. We decided to look at matches from the Premier League and created an animation to see what we could learn from a few different games.</p>
+<p><img src="series_files/figure-html/unnamed-chunk-5-1.gif" /><!-- --></p>
+<p>Within the animation, we can clearly see differences between each match, and we also see where the passes generally occur within the field. Notably, strong teams such as Manchester City, Manchester United, Arsenal, Liverpool or Chelsea clearly dominate the opposition in terms of the number of passes and pass location within the matches. They had greater numbers of passes that typically occurred closer to the opposition goal.</p>
+<p>The next step we wanted to explore was how these more dominant teams transformed these passes into goals to win the match. Where did they create more threats, dangerous chances, and goal scoring opportunities from passes to help win the game? The next animation plot provides some insight to this:</p>
+<p><img src="series_files/figure-html/unnamed-chunk-6-1.gif" /><!-- --></p>
+<p>Assists are the final pass leading to the recipient who ends up scoring a goal, while a key pass is the final pass leading to the recipient who has a shot at goal without scoring. These are the types of passes that create goals and goal scoring opportunities, and again we see patterns in the locations, types of passes, and quantity based on the teams. Many of these passes are coming from and going to similar areas on the field, which we will explore further. Also, we see that the strong teams have more key passes and assist, which leads to more goals compared to the weaker teams.</p>
+<p>Next, we wanted to explore how different variables affected pass locations and their distribution. To do this we used the point process data and created an areal data set so we could look at aggregate summaries over different field locations. This will make it a bit easier to compare the overall number of passes that occur in a given zone based on factors like the team and time of the game. We divided the field into the following 18 zone grid, as this is a common way of dividing up a soccer field into smaller sections.</p>
+<p><img src="series_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Then, the first variable we looked at in relation to passes was the time period of the match. We hypothesized that depending on the time of the game, the distribution of passes would vary given that teams may become more defensive or attacking minded throughout the course of the game. The matches were divided into 6, 15 minute segments, and then we plotted the total number of passes by zone in the Premier League across the whole season.</p>
+<p><img src="series_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>We do notice time influencing the location of passes, with a higher number of passes occurring in the defensive third at the start of the game, presumably when teams are just starting to settle into the game. As time progresses, passes gravitate more toward the attacking end of the field and are generally occurring more in wider areas of the pitch. Another way to visualize this is show below through kernel density plots. These highlight the locations of passes a bit better than the plot above, but do note that the intensity scales differ so it is not as good for comparing the true counts of passes in those locations.</p>
+<p><img src="series_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Another covariate we explored was the player’s assigned position, i.e. goalkeeper, defender, midfielder, or forward, with an added focus on the last three. Field players are arranged on the pitch according to these positions, and generally occupy the same sorts of spaces during the match. Defenders are usually the furthest back, midfielders in the middle, and forwards highest up the field. Because of this, we are curious to see how passes are distributed among these groups as we expect the locations to be somewhat correlated within positions and quite different between groups. A kernel density plot of Premier League passes by position in the 2017/18 season is shown below:</p>
+<p><img src="series_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>There is a clear difference in the distribution of pass locations and quantity based on player positions. It seems that more passes occur from defenders and midfielders as the relative intensities are about twice as large as forwards. The passes are also clustered within each group, aligning with common positions on the field. This shows that the locations of passes are correlated based on position, and this is something we should consider in our future models.</p>
+<p>From these initial visualizations, we are able to get a better understanding of the ways passes are distributed spatially on the pitch, and the types of factors that influence them, namely information about team, time of the game, and player’s assigned position. From here, we can use these variables and spatial information to model the number of successful passes to see what separates the best teams from the rest in the Premier League, and also how this varies from league to league.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

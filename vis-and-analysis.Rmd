@@ -1,0 +1,364 @@
+---
+output:
+  html_document:
+    code_folding: hide
+---
+# Visualization and Analysis {#vis-and-analysis}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r, results = "hide"}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(jsonlite)
+library(rjson)
+library(ggplot2)
+library(ggsoccer)
+library(spatstat)
+library(gganimate)
+library(tidyverse)
+library(sf)
+library(spdep)
+library(lme4)
+```
+
+```{r, results = "hide"}
+# The big overall data
+load("england.rdata")
+load("spain.rdata")
+load("france.rdata")
+load("germany.rdata")
+load("italy.rdata")
+```
+
+```{r, results = "hide"}
+#Position for each team
+load("position_team_areal_data_all_leagues.rdata")
+load("position_team_areal_data_England.rdata")
+load("position_team_areal_data_France.rdata")
+load("position_team_areal_data_Germany.rdata")
+load("position_team_areal_data_Italy.rdata")
+load("position_team_areal_data_Spain.rdata")
+
+```
+
+```{r, results = "hide"}
+#Team areal position
+load("team_areal_data_all_leagues.rdata")
+load("team_areal_data_England.rdata")
+load("team_areal_data_France.rdata")
+load("team_areal_data_Germany.rdata")
+load("team_areal_data_Italy.rdata")
+load("team_areal_data_Spain.rdata")
+```
+
+Our first step was to understand and visualize the overall distribution of passes within individual matches by team. We decided to look at matches from the Premier League and created an animation to see what we could learn from a few different games.
+
+```{r}
+p0 <- englandPlayers %>% 
+  filter(matchId %in% 19997745:19997750) %>%
+  mutate(matchId = factor(matchId)) %>%
+  group_by(matchId) %>%
+  mutate(teams = paste0(unique(node_name),collapse=' v ')) %>% 
+  ggplot() + 
+  annotate_pitch() +
+  geom_point(aes(x = x1, y = y1, color = node_name, frame = teams)) +
+  theme_pitch() +
+  direction_label() +
+  ggtitle("Total Passes", 
+          "Match: {closest_state}") + 
+  transition_states(
+    teams
+  ) +
+  labs(color = "Team")
+
+animate(p0, duration = 20)
+```
+
+Within the animation, we can clearly see differences between each match, and we also see where the passes generally occur within the field. Notably, strong teams such as Manchester City, Manchester United, Arsenal, Liverpool or Chelsea clearly dominate the opposition in terms of the number of passes and pass location within the matches. They had greater numbers of passes that typically occurred closer to the opposition goal. 
+
+The next step we wanted to explore was how these more dominant teams transformed these passes into goals to win the match. Where did they create more threats, dangerous chances, and goal scoring opportunities from passes to help win the game? The next animation plot provides some insight to this: 
+
+```{r}
+p1 <- englandPlayers %>% 
+  filter(matchId %in% c(19997745, 19997746, 19997747, 19997748, 19997750)) %>%
+  filter(key_pass == TRUE | assist == TRUE) %>% 
+  mutate(matchId = factor(matchId)) %>%
+  group_by(matchId) %>%
+  mutate(teams = paste0(unique(node_name), collapse=' v ')) %>% 
+  ggplot() + 
+  annotate_pitch() +
+  geom_segment(mapping = aes(x = x1, y = y1, xend = x2, yend = y2, color=node_name, frame=teams),
+               arrow = arrow(length = unit(0.25, "cm"),
+                             type = "closed")) +
+  theme_pitch() +
+  direction_label() +
+  ggtitle("Key Passes & Assists", 
+          "Match: {closest_state}") + 
+  transition_states(
+    teams
+  ) +
+  labs(color = "Team")
+
+animate(p1, duration = 20)
+```
+
+Assists are the final pass leading to the recipient who ends up scoring a goal, while a key pass is the final pass leading to the recipient who has a shot at goal without scoring. These are the types of passes that create goals and goal scoring opportunities, and again we see patterns in the locations, types of passes, and quantity based on the teams. Many of these passes are coming from and going to similar areas on the field, which we will explore further. Also, we see that the strong teams have more key passes and assist, which leads to more goals compared to the weaker teams. 
+
+
+Next, we wanted to explore how different variables affected pass locations and their distribution. To do this we used the point process data and created an areal data set so we could look at aggregate summaries over different field locations. This will make it a bit easier to compare the overall number of passes that occur in a given zone based on factors like the team and time of the game. We divided the field into the following 18 zone grid, as this is a common way of dividing up a soccer field into smaller sections.
+
+```{r, results = "hide"}
+# Adding pitch zones
+
+# zone helper functions
+get.zone.number = function(x1, y1) {
+  x = get.zone.x(x1)
+  y = get.zone.y(y1)
+  return((x - 1) * 3 + y)
+}
+
+get.zone.x = function(x) {
+  zone.width = 101 / 6
+  return(ceiling((x + 1) / zone.width))
+}
+
+get.zone.y = function(y) {
+  zone.height = 101 / 3
+  return(ceiling((y + 1) / zone.height))
+}
+
+englandPlayers <- englandPlayers %>%
+  mutate(zone = get.zone.number(x1, y1))
+
+```
+
+```{r, results = "hide"}
+# Create polygons
+polygon.list = vector("list", length = 18)
+index = 1
+for (x in 0:5) {
+  for (y in 0:2) {
+    x1 = x * 100 / 6
+    y1 = y * 100 / 3
+    x2 = (x + 1) * 100 / 6
+    y2 = (y + 1) * 100 / 3
+    zone = matrix(c(x1, y1, x1, y2, x2, y2, x2, y1, x1, y1), ncol = 2, byrow = TRUE)
+    polygon.list[[index]] = st_polygon(list(zone))
+    index = index + 1
+  }
+}
+pitch.zone.data = st_sf(zone=1:18, geom = st_sfc(polygon.list))
+
+ggplot(pitch.zone.data) + 
+  annotate_pitch() +
+  geom_sf(alpha=0) + 
+  geom_sf_text(aes(label = zone)) +
+  theme_pitch()
+
+
+pitch.zone.data <- pitch.zone.data %>% mutate(SideLabel = case_when(
+  zone %in% seq(1,16,by=3) ~ 'right',
+  zone %in% seq(2,17,by=3) ~ 'center',
+  zone %in% seq(3,18,by=3) ~ 'left',
+)) %>% mutate(LongLabel = case_when(
+  zone %in% 1:6 ~ 'defense',
+  zone %in% 7:12 ~ 'mid',
+  zone %in% 13:18 ~ 'attack'
+)) 
+```
+
+Then, the first variable we looked at in relation to passes was the time period of the match. We hypothesized that depending on the time of the game, the distribution of passes would vary given that teams may become more defensive or attacking minded throughout the course of the game. The matches were divided into 6, 15 minute segments, and then we plotted the total number of passes by zone in the Premier League across the whole season.
+
+```{r, results = "hide"}
+#Add Time Periods
+englandPlayers <- englandPlayers %>%
+  mutate(timeFrame = case_when(
+      (matchPeriod == "2H" & eventSec > 30*60)  ~                      "75 to end of game",
+      (matchPeriod == "2H" & eventSec <= 30*60 & eventSec > 15*60) ~   "60 to 75",
+      (matchPeriod == "2H" & eventSec <= 15*60) ~                      "45 to 60",
+      (eventSec <= 15*60)                        ~                     "0 to 15",
+      (eventSec <= 30*60)                        ~                     "15 to 30",
+      (matchPeriod == "1H")                      ~                     "30 to end of 1st half",
+      ))
+```
+
+```{r, results = "hide"}
+# Summarize function for creating areal data
+summarise_data = function(df) {
+  return(  
+    df %>%
+      summarise(
+      accurate = sum(accurate),
+      inacurate = sum(inacurate),
+      assist = sum(assist),
+      through = sum(through),
+      counter_attack = sum(counter_attack),
+      key_pass = sum(key_pass),
+      interception = sum(interception),
+      blocked = sum(blocked),
+      avg_dangerous_pass_prob = mean(dangerous_pass),
+      dangerous_pass = assist + key_pass,
+      simple_pass = sum(subEventName == "Simple pass"),
+      high_pass = sum(subEventName == "High pass"),
+      head_pass = sum(subEventName == "Head pass"),
+      smart_pass = sum(subEventName == "Smart pass"),
+      cross = sum(subEventName == "Cross"),
+      goal_kick = sum(subEventName == "Goal kick"),
+      free_kick = sum(subEventName == "Free Kick"),
+      corner = sum(subEventName == "Corner"),
+      hand_pass = sum(subEventName == "Hand pass"),
+      free_kick_cross = sum(subEventName == "Free kick cross"),
+      total_passes = simple_pass + high_pass + head_pass + smart_pass + cross + 
+        goal_kick + free_kick + corner + hand_pass + free_kick_cross
+      ) 
+    )
+}
+```
+
+```{r}
+englandPlayers %>%
+  group_by(zone, timeFrame) %>%
+  summarise(total_passes = n()) %>%
+  ungroup() %>%
+  left_join(pitch.zone.data) %>%
+  ggplot() +
+  annotate_pitch() +
+  geom_sf(aes(geometry = geom, fill = total_passes), alpha = .7, color = "white") +
+  theme_void() + 
+  facet_wrap(~timeFrame, nrow = 2, ncol = 3) +
+  ggtitle("Location of Premier League Passes by Time Frame") + 
+  scale_fill_gradient('',low = "white", high = "darkred", limits = c(0, 6000)) +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+We do notice time influencing the location of passes, with a higher number of passes occurring in the defensive third at the start of the game, presumably when teams are just starting to settle into the game. As time progresses, passes gravitate more toward the attacking end of the field and are generally occurring more in wider areas of the pitch. Another way to visualize this is show below through kernel density plots. These highlight the locations of passes a bit better than the plot above, but do note that the intensity scales differ so it is not as good for comparing the true counts of passes in those locations.
+
+
+```{r}
+#Premier League Density plots by time period
+full1 <- englandPlayers %>% 
+  filter(timeFrame == "0 to 15") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, timeFrame)
+
+#Turn data into a point pattern
+W <- owin(c(0, 100), c(0,100/1.5))
+full1pp <- as.ppp(full1, W = W)
+densfull1 <- density(full1pp) # Using the default bandwidth
+
+
+full2 <- englandPlayers %>% 
+  filter(timeFrame == "15 to 30") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, timeFrame)
+
+W <- owin(c(0, 100), c(0,100/1.5))
+full2pp <- as.ppp(full2, W = W)
+densfull2 <- density(full2pp) 
+
+
+full3 <- englandPlayers %>% 
+  filter(timeFrame == "30 to end of 1st half") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, timeFrame)
+
+W <- owin(c(0, 100), c(0,100/1.5))
+full3pp <- as.ppp(full3, W = W)
+densfull3 <- density(full3pp) 
+
+
+full4 <- englandPlayers %>% 
+  filter(timeFrame == "45 to 60") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, timeFrame)
+
+W <- owin(c(0, 100), c(0,100/1.5))
+full4pp <- as.ppp(full4, W = W)
+densfull4 <- density(full4pp)
+
+
+full5 <- englandPlayers %>% 
+  filter(timeFrame == "60 to 75") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, timeFrame)
+
+W <- owin(c(0, 100), c(0,100/1.5))
+full5pp <- as.ppp(full5, W = W)
+densfull5 <- density(full5pp) 
+
+
+full6 <- englandPlayers %>% 
+  filter(timeFrame == "75 to end of game") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, timeFrame)
+
+W <- owin(c(0, 100), c(0,100/1.5))
+full6pp <- as.ppp(full6, W = W)
+densfull6 <- density(full6pp)
+```
+
+
+```{r}
+par(mfrow = c(2, 3), oma = c(0, 0, 4, 0))
+plot(densfull1, main = "0' - 15'")
+plot(densfull2, main = "15' - 30'")
+plot(densfull3, main = "30' - end 1H")
+plot(densfull4, main = "45' - 60'")
+plot(densfull5, main = "60' - 75'")
+plot(densfull6, main = "75' - end of game")
+mtext("Premier League Passes by Time Period", outer = TRUE, cex = 1.5)
+```
+
+
+Another covariate we explored was the player's assigned position, i.e. goalkeeper, defender, midfielder, or forward, with an added focus on the last three. Field players are arranged on the pitch according to these positions, and generally occupy the same sorts of spaces during the match. Defenders are usually the furthest back, midfielders in the middle, and forwards highest up the field. Because of this, we are curious to see how passes are distributed among these groups as we expect the locations to be somewhat correlated within positions and quite different between groups. A kernel density plot of Premier League passes by position in the 2017/18 season is shown below: 
+
+```{r}
+#ENGLAND PLAYERS
+#Density plots by position
+forw <- englandPlayers %>% 
+  filter(node_role_name == "Forward") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, node_role_name)
+
+#Turn data into a point pattern
+W <- owin(c(0, 100), c(0,100/1.5))
+forwpp <- as.ppp(forw, W = W)
+densfor <- density(forwpp) # Using the default bandwidth
+
+
+mid <- englandPlayers %>% 
+  filter(node_role_name == "Midfielder") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, node_role_name)
+
+W <- owin(c(0, 100), c(0,100/1.5))
+midpp <- as.ppp(mid, W = W)
+densmid <- density(midpp)
+
+
+def <- englandPlayers %>% 
+  filter(node_role_name == "Defender") %>% 
+  mutate(transformed_y = y1/1.5) %>% 
+  dplyr::select(x1, transformed_y, node_role_name)
+
+W <- owin(c(0, 100), c(0,100/1.5))
+defpp <- as.ppp(def, W = W)
+densdef <- density(defpp)
+```
+
+```{r}
+par(mfrow = c(1, 3), oma = c(0, 0, 5, 0))
+plot(densdef, main = "Defenders")
+plot(densmid, main = "Midfielders")
+plot(densfor, main = "Forwards")
+mtext("Premier League Passes by Position", outer = TRUE, cex = 1.5)
+```
+
+
+There is a clear difference in the distribution of pass locations and quantity based on player positions. It seems that more passes occur from defenders and midfielders as the relative intensities are about twice as large as forwards. The passes are also clustered within each group, aligning with common positions on the field. This shows that the locations of passes are correlated based on position, and this is something we should consider in our future models.
+
+From these initial visualizations, we are able to get a better understanding of the ways passes are distributed spatially on the pitch, and the types of factors that influence them, namely information about team, time of the game, and player's assigned position. From here, we can use these variables and spatial information to model the number of successful passes to see what separates the best teams from the rest in the Premier League, and also how this varies from league to league.
