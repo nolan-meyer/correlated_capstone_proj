@@ -53,70 +53,6 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 
 <link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
@@ -196,7 +132,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="introduction" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Soccer is truly the world’s game. With an estimated 4 billion fans worldwide, professional soccer is more popular than baseball, American football, basketball, and hockey combined. In the U.S, many sports fans consider the Super Bowl as the biggest and most important game of the year. After all, it does attract the most attention of any American sporting event, with an average viewership of just under 100 million. However, the NFL championship game pales in comparison to Europe’s biggest yearly soccer event, the Champions League Final, which quadruples the amount of fans tuning in at 400 million. Additionally, according to FIFA, the 2018 World Cup final between France and Croatia reached a total viewer count of 1.1 billion. Across the 64 games of the competition 4.5 billion viewers tuned in <span class="citation">[@burton_2022]</span>. Proving that while soccer might not be the most popular sport in the U.S, the sport dominates the global market.</p>
-<p>However, statistical analysis of professional soccer has been way behind that of the “Big 4” American sports (baseball, football, basketball, and soccer). Michael Lewis brought data analysis in professional sports into the mainstream when he published Moneyball: The Art of Winning an Unfair Game in 2003. The book detailed the Oakland Athletics’ and its general manager Billy Beane’s analytical and evidence-based approach to assembling a competitive baseball team despite Oakland’s small budget. Since then, data analytics has taken the sports world by storm. Teams and fans alike have become more accustomed to advanced analytics, and have massive amounts of data available at a moment’s notice. All major American sports teams have integrated statistical analysis into their daily operations.</p>
+<p>However, statistical analysis of professional soccer has been way behind that of the “Big 4” American sports (baseball, football, basketball, and hockey). Michael Lewis brought data analysis in professional sports into the mainstream when he published Moneyball: The Art of Winning an Unfair Game in 2003. The book detailed the Oakland Athletics’ and its general manager Billy Beane’s analytical and evidence-based approach to assembling a competitive baseball team despite Oakland’s small budget. Since then, data analytics has taken the sports world by storm. Teams and fans alike have become more accustomed to advanced analytics, and have massive amounts of data available at a moment’s notice. All major American sports teams have integrated statistical analysis into their daily operations.</p>
 <p>However, professional soccer teams and coaches have been slower to accept analytics. This is due to the fact that until recently soccer has been one of the most difficult sports to analyze from a statistical perspective. Fundamentally, the biggest difficulty with analyzing soccer is the nature of the game. The low scoring and fluid style of the sport lends itself to a lack of data describing the performance of players and teams <span class="citation">[@pappalardo_2021]</span>.</p>
 <p>Soccer analytics has been an area of interest for a long time, but without the technology to track where and when events are happening few breakthroughs have happened. That is until recently, individual clubs have begun to hire specialized companies to collect massive amounts of data about players’ every move. Video-tracking and GPS technology has introduced an enormous amount of data to the soccer world. The volume and complexity of the data provides an unprecedented opportunity for clubs to measure their performance throughout individual games.</p>
 </div>
